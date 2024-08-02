@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createTask } from "../redux/slices/taskSlice";
 import { logout } from "../redux/slices/authSlice";
+import "../styles/AddTask.css";
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
@@ -31,20 +32,21 @@ const AddTask = () => {
     navigate("/tasks");
   };
 
-  const handleLogout=()=>{
-        dispatch(logout())
-        navigate('/login')
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   return (
-    <>
+    <div className="add-task-container">
       <div className="navbar">
-        <button onClick={handleLogout}>Logout</button>
+        <button className="navbar-button" onClick={handleLogout}>Logout</button>
       </div>
-      <form onSubmit={handleSubmit}>
-        <h2>Add Task</h2>
+      <form className="add-task-form" onSubmit={handleSubmit}>
+        <h2 className="add-task-heading">Add Task</h2>
         <input
           type="text"
+          className="add-task-input"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
@@ -52,15 +54,16 @@ const AddTask = () => {
         />
         <input
           type="text"
+          className="add-task-input"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description"
           required
         />
-        <button type="submit">Add Task</button>
+        <button className="add-task-button" type="submit">Add Task</button>
       </form>
-      <button onClick={handleSeeNotes}>See Notes</button>
-    </>
+      <button className="see-notes-button" onClick={handleSeeNotes}>See Notes</button>
+    </div>
   );
 };
 

@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../redux/slices/authSlice";
+import { Link } from 'react-router-dom';
+import "../styles/Register.css";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -14,12 +16,12 @@ const Register = () => {
   };
 
   return (
-    <>
-        
-      <form onSubmit={handleSubmit}>
-        <h2>Register</h2>
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h2 className="register-heading">Register</h2>
         <input
           type="text"
+          className="register-input"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
@@ -27,14 +29,20 @@ const Register = () => {
         />
         <input
           type="password"
+          className="register-input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
-        <button type="submit">Register</button>
+        <button className="register-button" type="submit">
+          Register
+        </button>
+        <div className="login-now">
+          Already have an account? <Link className="login-link" to='/login'>Login</Link>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

@@ -6,7 +6,6 @@ import Task from "./Task";
 import "../styles/TaskList.css";
 import { logout } from "../redux/slices/authSlice";
 
-
 const TaskList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.tasks);
@@ -33,15 +32,17 @@ const TaskList = () => {
   };
 
   return (
-    <div>
+    <div className="task-list-container">
       <div className="navbar">
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={handleAddTasks}>Add New Task</button>
+        <button className="navbar-button logout-button" onClick={handleLogout}>Logout</button>
+        <button className="navbar-button add-task-button" onClick={handleAddTasks}>Add New Task</button>
       </div>
-      <h2>Task List</h2>
-      {tasks.map((task) => (
-        <Task key={task._id} task={task} />
-      ))}
+      <h2>My Notes</h2>
+      <div className="list-container">
+        {tasks.map((task) => (
+          <Task key={task._id} task={task} />
+        ))}
+      </div>
     </div>
   );
 };
