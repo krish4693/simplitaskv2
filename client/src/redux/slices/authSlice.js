@@ -1,6 +1,7 @@
 // src/slices/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register, login } from '../../api/api';
+import {useNavigate} from 'react-router-dom'
 
 export const registerUser = createAsyncThunk('auth/registerUser', async (user) => {
     await register(user);
@@ -10,6 +11,8 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user) => {
     const { data } = await login(user);
     return data.token;
 });
+
+
 
 const authSlice = createSlice({
     name: 'auth',

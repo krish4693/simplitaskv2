@@ -14,16 +14,12 @@ const Task = ({ task }) => {
     dispatch(removeTask({ id: task._id, token }));
   };
 
-  const handleAddTasks=()=>{
-    navigate('/add-task')
-  }
-
+  
   return (
     <div>
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <button onClick={handleDelete}>Delete</button>
-      <button onClick={handleAddTasks}>Add New Task</button>
     </div>
   );
 };
