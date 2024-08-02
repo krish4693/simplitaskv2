@@ -15,7 +15,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         token: localStorage.getItem('token'),
-        isAuthenticated: null,
+        isAuthenticated: false,
     },
     reducers: {
         logout(state) {
@@ -31,8 +31,10 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 localStorage.setItem('token', action.payload);
+                console.log("Login successfull")
                 state.token = action.payload;
                 state.isAuthenticated = true;
+                console.log(state.isAuthenticated)
             });
     }
 });

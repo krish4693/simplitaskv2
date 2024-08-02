@@ -26,7 +26,12 @@ const AddTask = () => {
         }
     };
 
+    const handleSeeNotes=()=>{
+        navigate('/tasks')
+    }
+
     return (
+        <>
         <form onSubmit={handleSubmit}>
             <h2>Add Task</h2>
             <input
@@ -45,6 +50,8 @@ const AddTask = () => {
             />
             <button type="submit">Add Task</button>
         </form>
+        <button onClick={handleSeeNotes}>See Notes</button>
+        </>
     );
 };
 

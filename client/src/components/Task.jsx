@@ -1,23 +1,31 @@
 // src/components/Task.jsx
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeTask } from '../redux/slices/taskSlice';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeTask } from "../redux/slices/taskSlice";
+import {useNavigate} from 'react-router-dom'
 
 const Task = ({ task }) => {
-    const dispatch = useDispatch();
-    const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
 
-    const handleDelete = () => {
-        dispatch(removeTask({ id: task._id, token }));
-    };
+  const navigate=useNavigate()
 
-    return (
-        <div>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            <button onClick={handleDelete}>Delete</button>
-        </div>
-    );
+  const handleDelete = () => {
+    dispatch(removeTask({ id: task._id, token }));
+  };
+
+  const handleAddTasks=()=>{
+    navigate('/add-task')
+  }
+
+  return (
+    <div>
+      <h3>{task.title}</h3>
+      <p>{task.description}</p>
+      <button onClick={handleDelete}>Delete</button>
+      <button onClick={handleAddTasks}>Add New Task</button>
+    </div>
+  );
 };
 
 export default Task;

@@ -13,6 +13,7 @@ const TaskList = () => {
 
     useEffect(() => {
         if (!isAuthenticated) {
+            console.log(isAuthenticated)
             navigate('/login');
         } else {
             dispatch(getTasks(token));
@@ -21,6 +22,9 @@ const TaskList = () => {
 
     return (
         <div>
+            <div className='navbar'>
+                <button>Logout</button>
+            </div>
             <h2>Task List</h2>
             {tasks.map(task => (
                 <Task key={task._id} task={task} />

@@ -5,7 +5,10 @@ import router from './router';
 
 const App = () => {
     return (
+        <>
+        
         <RouterProvider router={router}/>
+        </>
     )
     
 };
