@@ -1,43 +1,58 @@
 // src/slices/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register, login } from '../../api/api';
-import {useNavigate} from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const registerUser = createAsyncThunk('auth/registerUser', async (user) => {
-    await register(user);
+export const registerUser = createAsyncThunk('auth/registerUser', async (user, { rejectWithValue }) => {
+    try {
+        await register(user);
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
 });
 
-export const loginUser = createAsyncThunk('auth/loginUser', async (user) => {
-    const { data } = await login(user);
-    return data.token;
+export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejectWithValue }) => {
+    try {
+        const { data } = await login(user);
+        return data.token;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
 });
-
-
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         token: localStorage.getItem('token'),
-        isAuthenticated: false,
+        isAuthenticated: !!localStorage.getItem('token'),
     },
     reducers: {
         logout(state) {
             localStorage.removeItem('token');
             state.token = null;
             state.isAuthenticated = false;
+            toast.info('Logged out successfully.');
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(registerUser.fulfilled, (state) => {
-                // Handle registration success if needed
+                toast.success('Registration successful!');
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                toast.error(action.payload || 'Registration failed.');
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 localStorage.setItem('token', action.payload);
-                console.log("Login successfull")
                 state.token = action.payload;
                 state.isAuthenticated = true;
-                console.log(state.isAuthenticated)
+                toast.success('Login successful!');
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.token = null;
+                state.isAuthenticated = false;
+                toast.error(action.payload || 'Login failed.');
             });
     }
 });
